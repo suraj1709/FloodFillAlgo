@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flood-Fill</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Lobster&family=Rubik+Mono+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:ital,wght@1,300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        
+        body {
+            height: 100%;
+            background: radial-gradient(ellipse at bottom, #3a6ca7 0%, #8c8f9c 100%);
+          }
+          
+          
+        #favcolor
+        {
+            border:none;
+            border-radius: 0%;
+           
+        }
+        favcolor::-webkit-color-swatch {
+            border: none;
+        }
+        #Table
+        {
+            display: table;
+            width: 40%;
+            margin-left:400px;
+            justify-content: center;
+        }
+        .header
+        {
+            text-align: center;
+            color:rgb(65, 64, 141);
+            border-color: beige;
+            font-family: 'Rubik Mono One', sans-serif;
+            
+        }
+        h1
+        {
+            text-align: center;
+            color:firebrick;
+            border-color: beige;
+            font-family: 'Dancing Script', cursive;
+
+            
+
+        }
+        .clear
+        {
+            width:150px;
+            height:30px;
+            align-items: center;
+            justify-content: center;
+        }
+        h3{
+            font-family: 'Open Sans Condensed', sans-serif;
+        }
+        .rangeslider{
+            margin-top:20px;
+            width: 100%;
+            align-items: center;
+            justify-content: center;
+            }
+
+        .myslider:hover {
+                opacity: 1;
+            }
+        .myslider::-webkit-slider-thumb {
+                -webkit-appearance: none;
+                cursor: pointer;
+                background: #34495E  ;
+                width: 5%;
+                height: 20px;
+            }
+        .button
+        {
+            
+            width: 200px;
+            height: 30px;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Rubik Mono One', sans-serif;
+        }
+      
+        div{
+            text-align:center;
+            padding: 1px;
+        }
+        .matrixlength
+        {
+            
+                align-items: center;
+                justify-content: center;
+        }
+       
+        </style>
+</head>
+<body>
+    
+    <h1 class="header">Flood Fill Algorithm</h1>
+    <div>
+        <p><h1>About</h1><span><h3>Flood Fill Algorithm helps in visiting each and every point in given area .It Determines the area connected to given cell in a Multi-Dimensional Array</h3>
+        </span></p>
+     <p><h1>Real Time Use Case</h1><span><h3>In MS-Paint, when we take the brush to a pixel and click, the color of the region of that pixel is replaced with a new selected color.</h3></span></p>
+    <p><h1>How to use this? </h1></p><span><h3> Consider a 2D Array where each block is a pixel on the screen. In this Example First, we need to generate a matrix with a  random color filled in the matrix. Click on Generate Matrix. A matrix will be displayed you need to select a new color to fill in the matrix, click on the color you need to change now you will notice it neighbors with the same color is replaced with new select color.</h3></span>
+     <p><h1>Algorithm Used</h1><span><h3>Breath First Search</h3></span></p>        
+     
+    </div>
+      <div>
+          <span>
+              <h3>Choose New Color</h3>              
+            </span>
+            <div>
+            <i class='fa fa-arrow-down' style='font-size:48px;color:black'></i>
+        </div>
+
+      <input type="color" id="favcolor" class="favcolor" name="favcolor" value="#ff0000">
+    </div>
+    <div>
+    <div id="Table"></div> 
+</div>
+    <div>
+        <button class="button" onclick="generateMatrix()">GENERATE MATRIX</button>
+    </div>
+    <<div>
+        <a href="http://github.com/suraj1709"><i class="fa fa-github" style="font-size:48px;color:black"></i></a>
+        </i>
+    </div>
+    
+    <script>
+        var matrix;
+var queue;
+var isVisted;
+var l;
+var m;
+var row;
+var col;
+var output = document.getElementById("matrix_length"); 
+selectedColor=()=>
+{
+var selectedColor = document.getElementById("favcolor").value;
+return selectedColor;
+console.log(selectedColor)
+}
+ Clear=()=>
+{
+    var table=document.getElementById('Table')
+    table.remove()
+    generateMatrix()
+    var button=document.querySelector('button')
+}
+changeColor=(colNum,colorChange)=>
+{
+    var columnName=document.querySelector('.'+colNum)
+    columnName.style.backgroundColor=colorChange
+
+}
+ generateMatrix=()=>
+{
+    matrix=[...Array(10)].map(x=>Array(10).fill('white')) 
+    isVisted=[...Array(10)].map(x=>Array(10).fill(false)) 
+    queue=[]
+
+    color=['blue','green','red','violet']
+    var button=document.querySelector('button')
+    button.remove()
+    var table=document.getElementById('Table')
+    table.style.display='table'
+    table.style.alignItems='center'
+for(let i=0;i<10;i++)
+{
+    var row=document.createElement("div")
+    row.className="row"+i
+    row.style.display='table-row'
+    table.appendChild(row)
+    for(let j=0;j<10;j++)
+    {
+        var col=document.createElement("div")
+        var newContent = document.createTextNode(""); 
+        var random=Math.floor(Math.random()*4)
+        
+        //CSS part for dynamic color
+        col.className="col"+i+j
+        col.style.display='table-cell'
+        col.style.border='solid'
+        col.style.borderWidth='thin';
+        col.style.width='30px'
+        col.style.height='30px'
+        col.style.backgroundColor=color[random]
+        matrix[i][j]=color[random]
+        col.style.paddingLeft='5px' 
+        col.style.paddingRight='5px' 
+        col.appendChild(newContent)
+        row.appendChild(col)  
+    }
+}
+document.addEventListener('click', function(e) {
+    e = e || window.event;
+    if(e.path[0].className.includes('col'))
+    {
+        
+        bfs(e.path[0].style.backgroundColor,e.path[0].className,selectedColor())
+    }
+
+}, false);
+
+}
+
+//BFS to traverse to the whole matrix
+
+bfs=(selectColor,clickedPosition,selectedColor)=>
+{
+    var pos=Array.from(clickedPosition.substr(3,4))
+    queue.push(parseInt(pos[0]))
+    queue.push(parseInt(pos[1]))
+    while(queue.length!=0)
+    {
+        
+        l=queue.shift()
+        m=queue.shift()
+        if(isVisted[l][m]===true)
+        {
+            continue
+        }
+        if(matrix[l][m]!==selectColor)
+        {
+            continue
+        }
+        matrix[l][m]=selectedColor
+        isVisted[l][m]=true
+        changeColor('col'+l+m,selectedColor)
+        findAdjacentElement(l,m)
+    }
+    
+}
+//Helper function to find adjacent
+findAdjacentElement=(l,m)=>
+{
+    
+    if(l-1>=0 && !isVisted[l-1][m])
+    {
+        queue.push(l-1)
+        queue.push(m)
+    }
+    if(l+1<10 && !isVisted[l+1][m])
+    {
+        queue.push(l+1)
+        queue.push(m)
+    }
+    if(m-1>=0 && !isVisted[l][m-1])
+    {
+        queue.push(l)
+        queue.push(m-1)
+    }
+    if(m+1<10 && !isVisted[l][m+1])
+    {
+        queue.push(l)
+        queue.push(m+1)
+    }
+}
+
+
+</script>
+</body>
+</html>
