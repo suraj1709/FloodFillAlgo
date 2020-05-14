@@ -1,0 +1,87 @@
+body {
+    height: 100%;
+    background: radial-gradient(ellipse at bottom, #3a6ca7 0%, #8c8f9c 100%);
+  }
+  
+  
+#favcolor
+{
+    border:none;
+    border-radius: 0%;
+   
+}
+favcolor::-webkit-color-swatch {
+    border: none;
+}
+#Table
+{
+    display: table;
+    margin-left:auto;
+    margin-right:auto;
+    justify-content: center;
+}
+.header
+{
+    text-align: center;
+    color:rgb(65, 64, 141);
+    border-color: beige;
+    font-family: 'Rubik Mono One', sans-serif;
+    
+}
+h1
+{
+    text-align: center;
+    color:firebrick;
+    border-color: beige;
+    font-family: 'Dancing Script', cursive;
+
+    
+
+}
+.clear
+{
+    width:150px;
+    height:30px;
+    align-items: center;
+    justify-content: center;
+}
+h3{
+    font-family: 'Open Sans Condensed', sans-serif;
+}
+.rangeslider{
+    margin-top:20px;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    }
+
+.myslider:hover {
+        opacity: 1;
+    }
+.myslider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        cursor: pointer;
+        background: #34495E  ;
+        width: 5%;
+        height: 20px;
+    }
+.button
+{
+    
+    width: 200px;
+    height: 30px;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Rubik Mono One', sans-serif;
+}
+
+div{
+    text-align:center;
+    padding: 1px;
+}
+.matrixlength
+{
+    
+        align-items: center;
+        justify-content: center;
+}
